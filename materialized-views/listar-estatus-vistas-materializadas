@@ -1,0 +1,8 @@
+/*
+LISTAR ESTATUS DE VISTAS MATERIALIZADAS EN CUALQUIER RANGO DE FECHAS
+*/
+SELECT job, what mview_name,
+       TO_CHAR (last_date, 'mm/dd/yyyy hh24:mm:ss') last_run,
+       TO_CHAR (next_date, 'mm/dd/yyyy hh24:mm:ss') next_run, INTERVAL
+FROM dba_jobs
+WHERE what LIKE 'dbms_refresh.refresh%';
