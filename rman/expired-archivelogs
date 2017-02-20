@@ -1,0 +1,18 @@
+/*
+Delete expired archivelogs using RMAN
+*/
+
+Below commands will helpful for deleting expired archivelog files through RMAN :
+
+RMAN>list expired archivelog all;
+
+RMAN>crosscheck archivelog all;
+
+RMAN>delete noprompt expired archivelog all;
+
+Now check the output with below command it should not return any list
+
+RMAN> list expired archivelog all;
+using target database control file instead of recovery catalog
+specification does not match any archived log in the repository
+RMAN>
