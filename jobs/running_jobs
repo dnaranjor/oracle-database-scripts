@@ -1,0 +1,64 @@
+/*
+Script: To list Running Jobs (Doc ID 1020283.6)
+This script will list running jobs that were submitted via DBMS_JOB.
+*/
+
+SET ECHO off 
+REM NAME:   TFSDBJRN.SQL 
+REM USAGE:"@path/tfsdbjrn" 
+REM ------------------------------------------------------------------------ 
+REM REQUIREMENTS: 
+REM    SELECT on DBA_JOBS, DBA_JOBS_RUNNING 
+REM ------------------------------------------------------------------------ 
+REM PURPOSE: 
+REM    Lists all jobs that are currently running in the local databbase. 
+REM    This lists only the jobs submitted via DBMS_JOB
+REM ------------------------------------------------------------------------ 
+REM Main text of script follows: 
+ 
+set pagesize 80 
+col sess format 99   heading 'Ses' 
+col jid  format 999  heading 'Id' 
+col subu format a10  heading 'Submitter'     trunc 
+col secd format a10  heading 'Security'      trunc 
+col proc format a20  heading 'Job'           word_wrapped 
+col lsd  format a5   heading 'Last|Ok|Date'  
+col lst  format a5   heading 'Last|Ok|Time' 
+col nrd  format a5   heading 'This|Run|Date' 
+col nrt  format a5   heading 'This|Run|Time' 
+col fail format 99 heading 'Err' 
+ 
+select 
+  djr.sid                        sess, 
+  djr.job                        jid, 
+  dj.log_user                    subu, 
+  dj.priv_user                   secd, 
+  dj.what                        proc, 
+  to_char(djr.last_date,'MM/DD') lsd, 
+  substr(djr.last_sec,1,5)       lst, 
+  to_char(djr.this_date,'MM/DD') nrd, 
+  substr(djr.this_sec,1,5)       nrt, 
+  djr.failures                   fail 
+from 
+  sys.dba_jobs dj, 
+  sys.dba_jobs_running djr 
+where 
+  djr.job = dj.job 
+/ 
+
+
+==============
+Sample Output:
+==============
+
+                                            Last  Last  This  This 
+                                Ok    Ok    Run   Run           
+Id Submitter Security Job                  Date  Time  Date  Time  Err Ok 
+-- --------- -------- -------------------- ----- ----- ----- ----- --- - 
+42 KELLY     KELLY    dbms_refresh.refresh 05/17 16:02 01/01 01:00   0 Y   
+                      ('"KELLY"."SNAP_MAST 
+                        ER"'); 
+ 
+45 MATT      MATT     dbms_refresh.refresh 05/22 12:24 01/01 14:30   0 Y 
+                      ('"MATT"."SNAP_MASTE 
+                      R"');
