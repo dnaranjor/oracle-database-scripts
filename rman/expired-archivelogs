@@ -4,6 +4,8 @@ Delete expired archivelogs using RMAN
 
 Below commands will helpful for deleting expired archivelog files through RMAN :
 
+Enter RMAN Mode: rman target /
+
 RMAN>list expired archivelog all;
 
 RMAN>crosscheck archivelog all;
