@@ -1,0 +1,12 @@
+/*
+Listar todos los snapshots AWR disponibles:
+*/
+
+set lines 100 pages 999
+
+select snap_id,
+  snap_level,
+  to_char(begin_interval_time, 'dd/mm/yy hh24:mi:ss') begin
+from 
+   dba_hist_snapshot 
+order by 1;
