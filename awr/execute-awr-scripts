@@ -1,0 +1,10 @@
+/*
+Generar el reporte AWR y/o generar detalles sobre la información contenida en el tablespace SYSAUX
+acerca del estatus de las tablas AWR
+*/
+
+SQL>@$ORACLE_HOME/rdbms/admin/awrrpt.sql
+
+y/o
+
+SQL>@$ORACLE_HOME/rdbms/admin/ awrinfo.sql
