@@ -3,6 +3,7 @@
 select 
    'Hostname : ' || host_name
    ,'Instance Name : ' || instance_name
+   ,'Status: ' || DATABASE_STATUS
    ,'Started At : ' || to_char(startup_time,'DD-MON-YYYY HH24:MI:SS') stime
    ,'Uptime : ' || floor(sysdate - startup_time) || ' days(s) ' ||
    trunc( 24*((sysdate-startup_time) - 
